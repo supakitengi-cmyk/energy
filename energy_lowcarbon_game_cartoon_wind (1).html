@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Energy Saving & Low CO₂ — Wind Cartoon Puzzle + Matching</title>
+<style>
+  :root{--bg:#0f172a;--card:#0b1222;--text:#e5e7eb;--muted:#9ca3af;--accent:#22c55e;--accent2:#06b6d4;--danger:#ef4444;--radius:18px;--shadow:0 10px 30px rgba(0,0,0,.35)}
+  *{box-sizing:border-box} html,body{height:100%}
+  body{margin:0;font-family:system-ui,Segoe UI,Roboto,Prompt,Arial;background:#0f172a;color:var(--text)}
+  .container{max-width:980px;margin:0 auto;padding:16px 16px 90px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+  .title{font-size:26px;font-weight:800;margin:8px 0 6px}
+  .subtitle{color:var(--muted)}
+  .grid{display:grid;gap:12px} .grid-2{grid-template-columns:1fr} @media(min-width:760px){.grid-2{grid-template-columns:1fr 1fr}}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:#1f2937;color:#fff;font-weight:800;cursor:pointer;width:100%}
+  .btn.primary{background:linear-gradient(180deg,#10b981,#059669)} .btn.secondary{background:linear-gradient(180deg,#0891b2,#0e7490)}
+  .badge{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05)}
+  .hr{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);margin:14px 0}
+  .ok{color:#bbf7d0} .danger{color:#fecaca} .muted{color:var(--muted)}
+
+  /* QR bar */
+  .qrbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:rgba(255,255,255,.04);padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:14px}
+  .qrimg canvas{width:120px;height:120px;background:#fff;border-radius:10px;border:1px solid rgba(255,255,255,.2)}
+  .qrtext{flex:1;min-width:240px} .qrtext small{display:block;color:var(--muted)}
+
+  /* Jigsaw */
+  .jig-target{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .slot{position:relative;background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.25);border-radius:12px;aspect-ratio:1/1;overflow:hidden}
+  .placed{position:absolute;inset:0;border-radius:12px;background-image:url('data:image/svg+xml;utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22900%22%20height=%22900%22%3E%20%20%3Cdefs%3E%20%20%20%20%3ClinearGradient%20id=%22sky%22%20x1=%220%22%20y1=%220%22%20x2=%220%22%20y2=%221%22%3E%20%20%20%20%20%20%3Cstop%20offset=%220%22%20stop-color=%22%23bde0fe%22/%3E%3Cstop%20offset=%221%22%20stop-color=%22%23a7f3d0%22/%3E%20%20%20%20%3C/linearGradient%3E%20%20%3C/defs%3E%20%20%3Crect%20width=%22100%%22%20height=%22100%%22%20fill=%22url(%23sky)%22/%3E%20%20%3C!--%20hills%20--%3E%20%20%3Cellipse%20cx=%22200%22%20cy=%22820%22%20rx=%22260%22%20ry=%22160%22%20fill=%22%2386efac%22/%3E%20%20%3Cellipse%20cx=%22520%22%20cy=%22840%22%20rx=%22320%22%20ry=%22180%22%20fill=%22%236ee7b7%22/%3E%20%20%3Cellipse%20cx=%22780%22%20cy=%22830%22%20rx=%22260%22%20ry=%22160%22%20fill=%22%2386efac%22/%3E%20%20%3C!--%20sun%20--%3E%20%20%3Ccircle%20cx=%22760%22%20cy=%22140%22%20r=%2260%22%20fill=%22%23fde047%22/%3E%20%20%3C!--%20main%20turbine%20--%3E%20%20%3Cg%20transform=%22translate(450,260)%22%3E%20%20%20%20%3Crect%20x=%22-8%22%20y=%2240%22%20width=%2216%22%20height=%22420%22%20rx=%228%22%20fill=%22%23e5e7eb%22%20stroke=%22%239ca3af%22/%3E%20%20%20%20%3Ccircle%20cx=%220%22%20cy=%2240%22%20r=%2220%22%20fill=%22%2394a3b8%22/%3E%20%20%20%20%3Cg%20fill=%22%23e5e7eb%22%20stroke=%22%2394a3b8%22%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-6,-120%20L6,-120%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L160,100%20L150,112%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-120,160%20L-130,172%20Z%22/%3E%20%20%20%20%3C/g%3E%20%20%3C/g%3E%20%20%3C!--%20small%20turbines%20--%3E%20%20%3Cg%20transform=%22translate(220,380)%20scale(0.6)%22%3E%20%20%20%20%3Crect%20x=%22-6%22%20y=%2240%22%20width=%2212%22%20height=%22420%22%20rx=%226%22%20fill=%22%23e5e7eb%22%20stroke=%22%239ca3af%22/%3E%20%20%20%20%3Ccircle%20cx=%220%22%20cy=%2240%22%20r=%2214%22%20fill=%22%2394a3b8%22/%3E%20%20%20%20%3Cg%20fill=%22%23e5e7eb%22%20stroke=%22%2394a3b8%22%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-6,-120%20L6,-120%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L160,100%20L150,112%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-120,160%20L-130,172%20Z%22/%3E%20%20%20%20%3C/g%3E%20%20%3C/g%3E%20%20%3Cg%20transform=%22translate(700,420)%20scale(0.55)%22%3E%20%20%20%20%3Crect%20x=%22-6%22%20y=%2240%22%20width=%2212%22%20height=%22420%22%20rx=%226%22%20fill=%22%23e5e7eb%22%20stroke=%22%239ca3af%22/%3E%20%20%20%20%3Ccircle%20cx=%220%22%20cy=%2240%22%20r=%2214%22%20fill=%22%2394a3b8%22/%3E%20%20%20%20%3Cg%20fill=%22%23e5e7eb%22%20stroke=%22%2394a3b8%22%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-6,-120%20L6,-120%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L160,100%20L150,112%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-120,160%20L-130,172%20Z%22/%3E%20%20%20%20%3C/g%3E%20%20%3C/g%3E%20%20%3C!--%20title%20--%3E%20%20%3Ctext%20x=%2240%22%20y=%2280%22%20font-size=%2242%22%20fill=%22%23065f46%22%20font-family=%22Arial,%20Helvetica,%20sans-serif%22%3EWind%20Turbine%20·%20Low%20Carbon%3C/text%3E%3C/svg%3E');background-size:300% 300%;background-repeat:no-repeat}
+  .slot.filled{border-style:solid;background:rgba(34,197,94,.06);border-color:rgba(34,197,94,.5)}
+  .bank{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .piece{border-radius:12px;aspect-ratio:1/1;background-image:url('data:image/svg+xml;utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22900%22%20height=%22900%22%3E%20%20%3Cdefs%3E%20%20%20%20%3ClinearGradient%20id=%22sky%22%20x1=%220%22%20y1=%220%22%20x2=%220%22%20y2=%221%22%3E%20%20%20%20%20%20%3Cstop%20offset=%220%22%20stop-color=%22%23bde0fe%22/%3E%3Cstop%20offset=%221%22%20stop-color=%22%23a7f3d0%22/%3E%20%20%20%20%3C/linearGradient%3E%20%20%3C/defs%3E%20%20%3Crect%20width=%22100%%22%20height=%22100%%22%20fill=%22url(%23sky)%22/%3E%20%20%3C!--%20hills%20--%3E%20%20%3Cellipse%20cx=%22200%22%20cy=%22820%22%20rx=%22260%22%20ry=%22160%22%20fill=%22%2386efac%22/%3E%20%20%3Cellipse%20cx=%22520%22%20cy=%22840%22%20rx=%22320%22%20ry=%22180%22%20fill=%22%236ee7b7%22/%3E%20%20%3Cellipse%20cx=%22780%22%20cy=%22830%22%20rx=%22260%22%20ry=%22160%22%20fill=%22%2386efac%22/%3E%20%20%3C!--%20sun%20--%3E%20%20%3Ccircle%20cx=%22760%22%20cy=%22140%22%20r=%2260%22%20fill=%22%23fde047%22/%3E%20%20%3C!--%20main%20turbine%20--%3E%20%20%3Cg%20transform=%22translate(450,260)%22%3E%20%20%20%20%3Crect%20x=%22-8%22%20y=%2240%22%20width=%2216%22%20height=%22420%22%20rx=%228%22%20fill=%22%23e5e7eb%22%20stroke=%22%239ca3af%22/%3E%20%20%20%20%3Ccircle%20cx=%220%22%20cy=%2240%22%20r=%2220%22%20fill=%22%2394a3b8%22/%3E%20%20%20%20%3Cg%20fill=%22%23e5e7eb%22%20stroke=%22%2394a3b8%22%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-6,-120%20L6,-120%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L160,100%20L150,112%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-120,160%20L-130,172%20Z%22/%3E%20%20%20%20%3C/g%3E%20%20%3C/g%3E%20%20%3C!--%20small%20turbines%20--%3E%20%20%3Cg%20transform=%22translate(220,380)%20scale(0.6)%22%3E%20%20%20%20%3Crect%20x=%22-6%22%20y=%2240%22%20width=%2212%22%20height=%22420%22%20rx=%226%22%20fill=%22%23e5e7eb%22%20stroke=%22%239ca3af%22/%3E%20%20%20%20%3Ccircle%20cx=%220%22%20cy=%2240%22%20r=%2214%22%20fill=%22%2394a3b8%22/%3E%20%20%20%20%3Cg%20fill=%22%23e5e7eb%22%20stroke=%22%2394a3b8%22%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-6,-120%20L6,-120%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L160,100%20L150,112%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-120,160%20L-130,172%20Z%22/%3E%20%20%20%20%3C/g%3E%20%20%3C/g%3E%20%20%3Cg%20transform=%22translate(700,420)%20scale(0.55)%22%3E%20%20%20%20%3Crect%20x=%22-6%22%20y=%2240%22%20width=%2212%22%20height=%22420%22%20rx=%226%22%20fill=%22%23e5e7eb%22%20stroke=%22%239ca3af%22/%3E%20%20%20%20%3Ccircle%20cx=%220%22%20cy=%2240%22%20r=%2214%22%20fill=%22%2394a3b8%22/%3E%20%20%20%20%3Cg%20fill=%22%23e5e7eb%22%20stroke=%22%2394a3b8%22%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-6,-120%20L6,-120%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L160,100%20L150,112%20Z%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M0,40%20L-120,160%20L-130,172%20Z%22/%3E%20%20%20%20%3C/g%3E%20%20%3C/g%3E%20%20%3C!--%20title%20--%3E%20%20%3Ctext%20x=%2240%22%20y=%2280%22%20font-size=%2242%22%20fill=%22%23065f46%22%20font-family=%22Arial,%20Helvetica,%20sans-serif%22%3EWind%20Turbine%20·%20Low%20Carbon%3C/text%3E%3C/svg%3E');background-size:300% 300%;background-repeat:no-repeat;border:1px solid rgba(255,255,255,.16);cursor:pointer;overflow:hidden;position:relative}
+  .piece.sel{outline:3px solid var(--accent)}
+
+  /* Matching */
+  .tile{border-radius:12px;border:1px solid rgba(255,255,255,.16);padding:8px;background:#0b1227;display:flex;align-items:center;gap:10px}
+  .tile img{width:64px;height:64px;object-fit:contain;background:#fff;border-radius:10px;border:1px solid rgba(0,0,0,.1)}
+  .drop{background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.25);border-radius:12px;padding:10px;min-height:64px;display:flex;align-items:center;gap:8px}
+  .drop.filled{border-style:solid;border-color:rgba(34,197,94,.5);background:rgba(34,197,94,.08)}
+  .pill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16)}
+  .sel{outline:3px solid var(--accent)}
+
+  /* Footer */
+  .footer{position:fixed;left:0;right:0;bottom:0;background:rgba(15,23,42,.9);border-top:1px solid rgba(255,255,255,.1)}
+  .footer .inner{max-width:980px;margin:0 auto;padding:10px 16px;display:flex;gap:10px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="qrbar">
+        <div class="qrimg"><canvas id="qr"></canvas></div>
+        <div class="qrtext">
+          <div class="title" style="font-size:18px;margin:0">สแกนเพื่อเข้าเล่นหน้านี้</div>
+          <small id="urlText"></small>
+          <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:8px">
+            <a class="btn secondary" id="btnDL" download="energy_game_qr.png">ดาวน์โหลด QR</a>
+            <button class="btn" id="btnRefreshQR">รีเฟรช QR</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+      <div class="title">เกมความรู้: จิ๊กซอว์กังหันลม (การ์ตูน) 9 ชิ้น + จับคู่พลังงาน (การ์ตูน) 5 ข้อ</div>
+      <div class="subtitle">รวม 14 คะแนน · ≥ 13 = ผ่าน</div>
+
+      <!-- Part 1: Jigsaw -->
+      <div class="hr"></div>
+      <div class="title" style="font-size:18px;margin-bottom:6px">Part 1 · จิ๊กซอว์ภาพเดียว (กังหันลม) 3×3 = 9 คะแนน</div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div id="jig" class="jig-target"></div>
+          <div class="grid grid-2" style="margin-top:8px">
+            <button class="btn" id="btnClear">ล้างกระดาน</button>
+            <button class="btn" id="btnShuffle">สลับชิ้นภาพ</button>
+          </div>
+        </div>
+        <div>
+          <div id="bank" class="bank"></div>
+        </div>
+      </div>
+
+      <!-- Part 2: Matching -->
+      <div class="hr"></div>
+      <div class="title" style="font-size:18px;margin-bottom:6px">Part 2 · จับคู่รูปการ์ตูน ↔ คำถาม (5 คะแนน)</div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+        <div id="left"></div>
+        <div id="right"></div>
+      </div>
+      <div class="grid grid-2" style="margin-top:8px">
+        <button class="btn" id="btnResetMatch">ล้างการจับคู่</button>
+        <button class="btn primary" id="btnSubmit">ส่งคำตอบ</button>
+      </div>
+
+      <!-- Result -->
+      <div class="hr"></div>
+      <div id="resultBox" style="display:none">
+        <div class="title" style="font-size:20px">ผลคะแนน</div>
+        <div id="scoreLine" class="title" style="font-size:28px"></div>
+        <div id="passLine" class="subtitle"></div>
+        <div id="detailLine" class="muted" style="margin-top:6px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="inner">
+      <div class="badge">ความคืบหน้า: <span id="prog">0/14</span></div>
+      <div class="badge">เกณฑ์ผ่าน: ≥ 13 คะแนน</div>
+      <div class="badge">Theme: Energy Saving / Low CO₂</div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script>
+    // -------- Utils --------
+    const $ = (q)=>document.querySelector(q);
+    const $$ = (q)=>Array.from(document.querySelectorAll(q));
+    const shuffle = (a)=>a.map(x=>[Math.random(),x]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+    const fmtPos = (i)=>`${(i%3)*50}% ${Math.floor(i/3)*50}%`;
+
+    // -------- Jigsaw (single cartoon image) --------
+    const PIECES = Array.from({length:9}, (_,i)=>i);
+    let bank = [];
+    let slots = Array(9).fill(null);
+    let selPiece = null;
+
+    function placedDiv(pieceId){
+      const d = document.createElement('div');
+      d.className='placed';
+      d.style.backgroundPosition = fmtPos(pieceId);
+      return d;
+    }
+
+    function renderJig(){
+      const wrap = $('#jig'); wrap.innerHTML='';
+      for(let i=0;i<9;i++){ 
+        const slot = document.createElement('div'); slot.className='slot';
+        if(slots[i]!==null){ 
+          slot.classList.add('filled'); 
+          const tile = placedDiv(slots[i]);
+          tile.addEventListener('click',()=>{ bank.push(slots[i]); slots[i]=null; selPiece=null; renderBank(); renderJig(); updateProg(); });
+          slot.appendChild(tile);
+        } else {
+          const guide = placedDiv(i); guide.style.opacity=.22; slot.appendChild(guide);
+          slot.addEventListener('click',()=>{ if(selPiece===null) return; slots[i]=selPiece; bank=bank.filter(x=>x!==selPiece); selPiece=null; renderBank(); renderJig(); updateProg(); });
+        }
+        wrap.appendChild(slot);
+      }
+    }
+
+    function renderBank(){
+      const bk = $('#bank'); bk.innerHTML='';
+      bank.forEach(id=>{
+        const p = document.createElement('div'); p.className='piece';
+        p.style.backgroundPosition = fmtPos(id);
+        p.addEventListener('click',()=>{ $$('#bank .piece').forEach(x=>x.classList.remove('sel')); if(selPiece===id){ selPiece=null; p.classList.remove('sel'); } else { selPiece=id; p.classList.add('sel'); } });
+        bk.appendChild(p);
+      });
+    }
+
+    function clearJig(){ slots = Array(9).fill(null); bank = shuffle(PIECES.slice()); selPiece=null; renderBank(); renderJig(); updateProg(); }
+    function shuffleBank(){ bank = shuffle(bank); renderBank(); }
+    function jigScore(){ let s=0; for(let i=0;i<9;i++) if(slots[i]===i) s++; return s; }
+
+    // -------- Matching (cartoon images ↔ questions) --------
+    const MATCH = [
+      {id:'lightoff', img:'data:image/svg+xml;utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22120%22%20height=%22120%22%3E%20%20%20%20%20%20%3Crect%20width=%22100%%22%20height=%22100%%22%20fill=%22%23fff7ed%22/%3E%20%20%20%20%20%20%3Ccircle%20cx=%2260%22%20cy=%2250%22%20r=%2226%22%20fill=%22%23fbbf24%22/%3E%20%20%20%20%20%20%3Crect%20x=%2250%22%20y=%2276%22%20width=%2220%22%20height=%2218%22%20rx=%224%22%20fill=%22%23374151%22/%3E%20%20%20%20%20%20%3Cline%20x1=%2260%22%20y1=%2210%22%20x2=%2260%22%20y2=%2226%22%20stroke=%22%23f59e0b%22%20stroke-width=%226%22/%3E%20%20%20%20%20%20%3Ctext%20x=%2260%22%20y=%22112%22%20font-size=%2214%22%20text-anchor=%22middle%22%20fill=%22%237c2d12%22%3EOFF%3C/text%3E%20%20%20%20%3C/svg%3E', question:'การปิดไฟเมื่อไม่ใช้งานช่วยลดอะไร?', answer:'การใช้พลังงานไฟฟ้า'},
+      {id:'recycle', img:'data:image/svg+xml;utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22120%22%20height=%22120%22%3E%20%20%20%20%20%20%3Crect%20width=%22100%%22%20height=%22100%%22%20fill=%22%23ecfeff%22/%3E%20%20%20%20%20%20%3Cpolygon%20points=%2260,20%2080,40%2070,40%2085,60%2075,60%2060,40%22%20fill=%22%2310b981%22/%3E%20%20%20%20%20%20%3Cpolygon%20points=%2230,55%2050,55%2040,70%2055,85%2045,85%2030,70%22%20fill=%22%2310b981%22/%3E%20%20%20%20%20%20%3Cpolygon%20points=%2270,70%2090,70%2075,90%2060,90%2065,80%22%20fill=%22%2310b981%22/%3E%20%20%20%20%20%20%3Ctext%20x=%2260%22%20y=%22112%22%20font-size=%2214%22%20text-anchor=%22middle%22%20fill=%22%23065f46%22%3ERECYCLE%3C/text%3E%20%20%20%20%3C/svg%3E', question:'การรีไซเคิลช่วยลดปริมาณอะไร?', answer:'ขยะ'},
+      {id:'bike', img:'data:image/svg+xml;utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22120%22%20height=%22120%22%3E%20%20%20%20%20%20%3Crect%20width=%22100%%22%20height=%22100%%22%20fill=%22%23eef2ff%22/%3E%20%20%20%20%20%20%3Ccircle%20cx=%2235%22%20cy=%2285%22%20r=%2218%22%20stroke=%22%23111827%22%20fill=%22none%22%20stroke-width=%224%22/%3E%20%20%20%20%20%20%3Ccircle%20cx=%2285%22%20cy=%2285%22%20r=%2218%22%20stroke=%22%23111827%22%20fill=%22none%22%20stroke-width=%224%22/%3E%20%20%20%20%20%20%3Cpath%20d=%22M35,85%20L58,65%20L85,85%22%20stroke=%22%23111827%22%20fill=%22none%22%20stroke-width=%224%22/%3E%20%20%20%20%20%20%3Crect%20x=%2255%22%20y=%2250%22%20width=%2214%22%20height=%2210%22%20fill=%22%233b82f6%22%20rx=%222%22/%3E%20%20%20%20%20%20%3Ctext%20x=%2260%22%20y=%2225%22%20font-size=%2214%22%20text-anchor=%22middle%22%20fill=%22%231e3a8a%22%3EBIKE%3C/text%3E%20%20%20%20%3C/svg%3E', question:'การเดินหรือปั่นจักรยานช่วยลดการปล่อยอะไร?', answer:'ก๊าซ CO₂'},
+      {id:'tree', img:'data:image/svg+xml;utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22120%22%20height=%22120%22%3E%20%20%20%20%20%20%3Crect%20width=%22100%%22%20height=%22100%%22%20fill=%22%23ecfccb%22/%3E%20%20%20%20%20%20%3Ccircle%20cx=%2260%22%20cy=%2250%22%20r=%2228%22%20fill=%22%2322c55e%22/%3E%20%20%20%20%20%20%3Crect%20x=%2254%22%20y=%2260%22%20width=%2212%22%20height=%2228%22%20fill=%22%2392400e%22/%3E%20%20%20%20%20%20%3Ctext%20x=%2260%22%20y=%22112%22%20font-size=%2214%22%20text-anchor=%22middle%22%20fill=%22%2314532d%22%3ETREE%3C/text%3E%20%20%20%20%3C/svg%3E', question:'การปลูกต้นไม้ช่วยดูดซับก๊าซอะไร?', answer:'ก๊าซ CO₂'},
+      {id:'solar', img:'data:image/svg+xml;utf8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%22120%22%20height=%22120%22%3E%20%20%20%20%20%20%3Crect%20width=%22100%%22%20height=%22100%%22%20fill=%22%23e0f2fe%22/%3E%20%20%20%20%20%20%3Crect%20x=%2218%22%20y=%2262%22%20width=%2284%22%20height=%2242%22%20rx=%226%22%20fill=%22%230ea5e9%22/%3E%20%20%20%20%20%20%3Cg%20stroke=%22%2393c5fd%22%20stroke-width=%222%22%3E%20%20%20%20%20%20%20%20%3Cline%20x1=%2218%22%20y1=%2274%22%20x2=%22102%22%20y2=%2274%22/%3E%3Cline%20x1=%2218%22%20y1=%2288%22%20x2=%22102%22%20y2=%2288%22/%3E%20%20%20%20%20%20%20%20%3Cline%20x1=%2236%22%20y1=%2262%22%20x2=%2236%22%20y2=%22104%22/%3E%3Cline%20x1=%2254%22%20y1=%2262%22%20x2=%2254%22%20y2=%22104%22/%3E%20%20%20%20%20%20%20%20%3Cline%20x1=%2272%22%20y1=%2262%22%20x2=%2272%22%20y2=%22104%22/%3E%3Cline%20x1=%2290%22%20y1=%2262%22%20x2=%2290%22%20y2=%22104%22/%3E%20%20%20%20%20%20%3C/g%3E%20%20%20%20%20%20%3Ccircle%20cx=%2290%22%20cy=%2226%22%20r=%2212%22%20fill=%22%23fde047%22/%3E%20%20%20%20%20%20%3Ctext%20x=%2260%22%20y=%2218%22%20font-size=%2212%22%20text-anchor=%22middle%22%20fill=%22%230c4a6e%22%3ESOLAR%3C/text%3E%20%20%20%20%3C/svg%3E', question:'แผงโซลาร์เซลล์ช่วยผลิตพลังงานจากอะไร?', answer:'แสงอาทิตย์'},
+    ];
+    let pairs = {}; let selImgId = null;
+
+    function renderMatch(){
+      const left = $('#left'), right = $('#right'); left.innerHTML=''; right.innerHTML='';
+      const L = shuffle(MATCH.slice()); const R = shuffle(MATCH.slice());
+
+      L.forEach(item=>{
+        const t = document.createElement('div'); t.className='tile'; t.dataset.id=item.id;
+        const img = document.createElement('img'); img.src=item.img; img.alt=item.id;
+        const lab = document.createElement('div'); lab.textContent=item.id.toUpperCase();
+        t.appendChild(img); t.appendChild(lab);
+        t.addEventListener('click',()=>{ $$('#left .tile').forEach(x=>x.classList.remove('sel')); selImgId = selImgId===item.id ? null : item.id; t.classList.toggle('sel',!!selImgId); });
+        left.appendChild(t);
+      });
+
+      R.forEach(item=>{
+        const d=document.createElement('div'); d.className='drop'; d.dataset.id=item.id;
+        const q=document.createElement('div'); q.style.flex='1'; q.textContent=item.question;
+        const hint=document.createElement('div'); hint.className='muted'; hint.textContent='แตะเพื่อวางรูป';
+        d.appendChild(q); d.appendChild(hint);
+        d.addEventListener('click',()=>{ 
+          if(!selImgId) return; if(pairs[item.id]) return; 
+          pairs[item.id]=selImgId; d.classList.add('filled'); hint.remove();
+          const chip=document.createElement('div'); chip.className='pill'; chip.textContent=selImgId.toUpperCase(); d.appendChild(chip);
+          const src = document.querySelector(`#left .tile[data-id="${selImgId}"]`); if(src){ src.classList.add('disabled'); src.style.opacity='.5'; src.classList.remove('sel'); }
+          selImgId=null; updateProg();
+        });
+        right.appendChild(d);
+      });
+    }
+
+    function resetMatch(){ pairs={}; selImgId=null; renderMatch(); updateProg(); }
+    function matchScore(){ let s=0; Object.entries(pairs).forEach(([qid,img])=>{ if(qid===img) s++; }); return s; }
+
+    // -------- QR --------
+    function makeQR(){
+      const el = document.getElementById('qr');
+      const qr = new QRious({ element: el, size: 240, value: location.href });
+      document.getElementById('urlText').textContent = location.href;
+      document.getElementById('btnDL').href = el.toDataURL('image/png');
+    }
+
+    // -------- Progress & Submit --------
+    function updateProg(){
+      const placed = slots.filter(x=>x!==null).length;
+      const matched = Object.keys(pairs).length;
+      document.getElementById('prog').textContent = (placed+matched) + "/14";
+    }
+    function submitAll(){
+      if(slots.some(x=>x===null)){ alert("กรุณาวางชิ้นภาพให้ครบ 9 ชิ้น"); return; }
+      if(Object.keys(pairs).length!==5){ alert("กรุณาจับคู่รูปกับคำถามให้ครบ 5 ข้อ"); return; }
+      const s1=jigScore(), s2=matchScore(), total=s1+s2;
+      document.getElementById('resultBox').style.display='block';
+      document.getElementById('scoreLine').textContent = total + " / 14 คะแนน";
+      document.getElementById('passLine').innerHTML = total>=13 ? "<span class='ok'>ผ่าน 🎉</span>" : "<span class='danger'>ไม่ผ่าน 😅 ลองใหม่";
+      document.getElementById('detailLine').textContent = `ต่อภาพถูก ${s1} / 9 · จับคู่ถูก ${s2} / 5`;
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    // -------- Init --------
+    document.getElementById('btnClear').addEventListener('click', clearJig);
+    document.getElementById('btnShuffle').addEventListener('click', shuffleBank);
+    document.getElementById('btnResetMatch').addEventListener('click', resetMatch);
+    document.getElementById('btnSubmit').addEventListener('click', submitAll);
+    document.getElementById('btnRefreshQR').addEventListener('click', makeQR);
+
+    function init(){
+      bank = shuffle(PIECES.slice());
+      renderBank(); renderJig();
+      renderMatch();
+      makeQR();
+      updateProg();
+    }
+    function renderBank(){
+      const bk = document.getElementById('bank'); bk.innerHTML='';
+      bank.forEach(id=>{
+        const p = document.createElement('div'); p.className='piece';
+        p.style.backgroundPosition = fmtPos(id);
+        p.addEventListener('click',()=>{ $$('#bank .piece').forEach(x=>x.classList.remove('sel')); if(selPiece===id){ selPiece=null; p.classList.remove('sel'); } else { selPiece=id; p.classList.add('sel'); } });
+        bk.appendChild(p);
+      });
+    }
+    function clearJig(){ slots = Array(9).fill(null); bank = shuffle(PIECES.slice()); selPiece=null; renderBank(); renderJig(); updateProg(); }
+    function shuffleBank(){ bank = shuffle(bank); renderBank(); }
+    init();
+  </script>
+</body>
+</html>
